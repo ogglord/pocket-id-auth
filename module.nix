@@ -3,7 +3,7 @@
 # Declarative Pocket-ID OIDC client configuration.
 #
 # Services declare their OIDC client requirements via
-#   services.pocket-id-declarative.clients.<name> = { ... }
+#   services.pocket-id-auth.clients.<name> = { ... }
 #
 # A sync script runs on every deploy via postStart and creates or updates
 # each client idempotently using Pocket-ID's REST API (STATIC_API_KEY).
@@ -13,7 +13,7 @@
 #   - STATIC_API_KEY set in Pocket-ID and accessible via staticApiKeyFile
 
 let
-  cfg = config.services.pocket-id-declarative;
+  cfg = config.services.pocket-id-auth;
 
   # Normalise a list of URLs for the API payload (strip trailing slashes, flatten).
   normaliseUrls = urls: map (u: lib.removeSuffix "/" u) urls;
@@ -131,7 +131,7 @@ let
   };
 in
 {
-  options.services.pocket-id-declarative = {
+  options.services.pocket-id-auth = {
     enable = lib.mkEnableOption "declarative Pocket-ID OIDC client sync";
 
     baseUrl = lib.mkOption {

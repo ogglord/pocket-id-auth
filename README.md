@@ -1,4 +1,4 @@
-# pocket-id-declarative
+# pocket-id-auth
 
 Declarative OIDC client configuration for [Pocket-ID](https://pocket-id.org).
 
@@ -15,7 +15,7 @@ Pocket-ID's Web UI is fine for one-off setup, but when you have many services (S
 ```nix
 # flake.nix
 inputs = {
-  pocket-id-declarative.url = "github:ogglord/pocket-id-declarative";
+  pocket-id-auth.url = "github:ogglord/pocket-id-auth";
 };
 ```
 
@@ -24,7 +24,7 @@ inputs = {
 ```nix
 # configuration.nix
 imports = [
-  inputs.pocket-id-declarative.nixosModules.default
+  inputs.pocket-id-auth.nixosModules.default
 ];
 ```
 
@@ -33,7 +33,7 @@ imports = [
 Each service declares its own client:
 
 ```nix
-services.pocket-id-declarative.clients.sonarr = {
+services.pocket-id-auth.clients.sonarr = {
   name = "Sonarr";
   redirectUris = [ "https://sonarr.cignl.cc/oauth/callback" ];
   # Optional:
@@ -42,7 +42,7 @@ services.pocket-id-declarative.clients.sonarr = {
   # launchURL = "https://sonarr.cignl.cc";
 };
 
-services.pocket-id-declarative.clients.radarr = {
+services.pocket-id-auth.clients.radarr = {
   name = "Radarr";
   redirectUris = [ "https://radarr.cignl.cc/oauth/callback" ];
 };
@@ -51,7 +51,7 @@ services.pocket-id-declarative.clients.radarr = {
 ### 4. Configure the API connection
 
 ```nix
-services.pocket-id-declarative = {
+services.pocket-id-auth = {
   enable = true;
   baseUrl = "http://127.0.0.1:1411";                # Pocket-ID internal URL
   staticApiKeyFile = "/run/secrets/pocket-id/STATIC_API_KEY";  # file containing the API key
