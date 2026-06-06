@@ -51,10 +51,15 @@ let
       api() {
         local method=$1 path=$2 data=$3
         shift 2
-        curl -sf -X "$method" "$BASE$path" \
-          -H "X-API-Key: $KEY" \
-          -H "Content-Type: application/json" \
-          ${""}${data:+-d "$data"}
+        if [ -n "$data" ]; then
+          curl -sf -X "$method" "$BASE$path" \
+            -H "X-API-Key: $KEY" \
+            -H "Content-Type: application/json" \
+            -d "$data"
+        else
+          curl -sf -X "$method" "$BASE$path" \
+            -H "X-API-Key: $KEY"
+        fi
       }
 
       # ── Helper: fetch all pages of a paginated endpoint ──────────────────
